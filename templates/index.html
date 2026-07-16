@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Tello WiFi Swarm</h1>
+      <p class="sub">Raspberry Pi SoftAP · multi-drone status</p>
+    </div>
+    <div class="ap-badge" id="ap-badge">
+      <span class="label">AP</span>
+      <span id="ap-ssid">{{ ap.ssid or '—' }}</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel stats">
+      <div class="stat">
+        <div class="num" id="stat-connected">0</div>
+        <div class="cap">Connected</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="stat-total">0</div>
+        <div class="cap">Discovered</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="stat-uptime">0s</div>
+        <div class="cap">Uptime</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="refresh-age">—</div>
+        <div class="cap">Last refresh</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Connected drones</h2>
+        <button type="button" id="btn-refresh">Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table id="drone-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>IP</th>
+              <th>MAC</th>
+              <th>Battery</th>
+              <th>SN</th>
+              <th>SDK</th>
+              <th>Last seen</th>
+              <th>Error</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="drone-body">
+            <tr><td colspan="9" class="empty">Waiting for drones…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel grid-2">
+      <div>
+        <h2>Add IP manually</h2>
+        <form id="add-form" class="inline-form">
+          <input type="text" id="add-ip" placeholder="192.168.0.12" required>
+          <button type="submit">Add</button>
+        </form>
+        <p class="hint">Use when DHCP leases are unavailable (e.g. dry-run / lab).</p>
+      </div>
+      <div>
+        <h2>Broadcast command</h2>
+        <form id="broadcast-form" class="inline-form">
+          <input type="text" id="broadcast-cmd" placeholder="battery?" required>
+          <button type="submit">Send to connected</button>
+        </form>
+        <pre id="broadcast-result" class="result"></pre>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>SoftAP info</h2>
+      <dl class="kv" id="ap-info">
+        <dt>SSID</dt><dd id="info-ssid">{{ ap.ssid or '—' }}</dd>
+        <dt>Password</dt><dd id="info-password">{{ ap.password or '—' }}</dd>
+        <dt>Gateway</dt><dd id="info-gateway">{{ ap.gateway or '—' }}</dd>
+        <dt>Interface</dt><dd id="info-iface">{{ ap.interface or '—' }}</dd>
+        <dt>DHCP</dt><dd id="info-dhcp">—</dd>
+        <dt>Mode</dt><dd id="info-mode">—</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <span>SDK ports 8889 / 8890 · station mode via <code>ap SSID PASS</code></span>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
