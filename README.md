@@ -10,10 +10,11 @@ Deploy this module on a Raspberry Pi to create a WiFi access point and talk to T
 3. Drones join the Pi network and get DHCP leases (default `192.168.0.10`–`192.168.0.50`).
 4. This module discovers clients (DHCP leases + ARP), probes with `command`, and shows them in the UI.
 
-
+"""
 [Tello A] ─┐
 [Tello B] ─┼──>> [Raspberry Pi SoftAP] <<── Laptop (http://192.168.0.1:8080)
 [Tello C] ─┘
+"""
 
 ### Setup (on the Pi)
 
